@@ -6,6 +6,11 @@ public class Controls : MonoBehaviour {
 
     public Rigidbody2D sonic;
 
+    public Transform groundCheck;
+    public float groundCheckRadius;
+    public LayerMask whatIsGround;
+    public bool onGround;
+
     public float movespeed;
     public float jumpheight;
 
@@ -13,7 +18,7 @@ public class Controls : MonoBehaviour {
     public bool moveRight;
     public bool moveLeft;
     public bool jump;
-
+    
     public void Direction()
     {
         if (sonic.velocity == new Vector2(-movespeed, sonic.velocity.y))
@@ -40,9 +45,14 @@ public class Controls : MonoBehaviour {
         {
             sonic.velocity = new Vector2(movespeed, sonic.velocity.y);
         }
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space) && onGround)
         {
             sonic.velocity = new Vector2(sonic.velocity.x, jumpheight);
+        }
+
+        if (!Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.RightArrow) && onGround)
+        {
+            sonic.velocity = new Vector2(0, sonic.velocity.y);
         }
     }
     public void touchMove()
@@ -55,7 +65,7 @@ public class Controls : MonoBehaviour {
         {
             sonic.velocity = new Vector2(-movespeed, sonic.velocity.y);
         }
-        if (jump)
+        if (jump && onGround)
         {
             sonic.velocity = new Vector2(sonic.velocity.x, jumpheight);
             jump = false;
@@ -69,14 +79,13 @@ public class Controls : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
         Direction();
-
         kboardMove();
-
         touchMove();
-      
-
+    }
+    void FixedUpdate()
+    {
+        onGround = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
     }
 
 }

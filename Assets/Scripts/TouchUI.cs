@@ -33,8 +33,11 @@ public class TouchUI : MonoBehaviour {
 
     public void Jump()
     {
-        player.jump = true;
-    }
+        if (player.onGround)
+        {
+            player.jump = true;
+        }
+     }
 
 		
 }

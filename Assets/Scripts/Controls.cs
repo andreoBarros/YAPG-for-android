@@ -5,8 +5,11 @@ using UnityEngine;
 public class Controls : MonoBehaviour {
 
     public Rigidbody2D sonic;
+
     public float movespeed;
     public int mvinDirection;
+    public bool moveRight;
+    public bool moveLeft;
 
     public void Direction()
     {
@@ -24,7 +27,17 @@ public class Controls : MonoBehaviour {
             mvinDirection = 0;
         }
     }
-
+    public void kboardMove()
+    {
+        if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            sonic.velocity = new Vector2(-movespeed, sonic.velocity.y);
+        }
+        if (Input.GetKey(KeyCode.RightArrow))
+        {
+            sonic.velocity = new Vector2(movespeed, sonic.velocity.y);
+        }
+    }
 
     // Use this for initialization
     void Start () {
@@ -35,15 +48,17 @@ public class Controls : MonoBehaviour {
 	void Update () {
 
         Direction();
-		if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            sonic.velocity = new Vector2(-movespeed, sonic.velocity.y);
-        }
-        if (Input.GetKey(KeyCode.RightArrow))
+
+        kboardMove();
+
+        if (moveRight)
         {
             sonic.velocity = new Vector2(movespeed, sonic.velocity.y);
         }
-
+        if (moveLeft)
+        {
+            sonic.velocity = new Vector2(-movespeed, sonic.velocity.y);
+        }
 
     }
 

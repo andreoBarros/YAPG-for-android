@@ -7,9 +7,12 @@ public class Controls : MonoBehaviour {
     public Rigidbody2D sonic;
 
     public float movespeed;
+    public float jumpheight;
+
     public int mvinDirection;
     public bool moveRight;
     public bool moveLeft;
+    public bool jump;
 
     public void Direction()
     {
@@ -37,6 +40,26 @@ public class Controls : MonoBehaviour {
         {
             sonic.velocity = new Vector2(movespeed, sonic.velocity.y);
         }
+        if (Input.GetKey(KeyCode.Space))
+        {
+            sonic.velocity = new Vector2(sonic.velocity.x, jumpheight);
+        }
+    }
+    public void touchMove()
+    {
+        if (moveRight)
+        {
+            sonic.velocity = new Vector2(movespeed, sonic.velocity.y);
+        }
+        if (moveLeft)
+        {
+            sonic.velocity = new Vector2(-movespeed, sonic.velocity.y);
+        }
+        if (jump)
+        {
+            sonic.velocity = new Vector2(sonic.velocity.x, jumpheight);
+            jump = false;
+        }
     }
 
     // Use this for initialization
@@ -51,14 +74,8 @@ public class Controls : MonoBehaviour {
 
         kboardMove();
 
-        if (moveRight)
-        {
-            sonic.velocity = new Vector2(movespeed, sonic.velocity.y);
-        }
-        if (moveLeft)
-        {
-            sonic.velocity = new Vector2(-movespeed, sonic.velocity.y);
-        }
+        touchMove();
+      
 
     }
 

@@ -20,7 +20,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4988990382046858}
   - component: {fileID: 212271822151398002}
-  m_Layer: 0
+  - component: {fileID: 60737621979129440}
+  m_Layer: 8
   m_Name: plataformRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,6 +41,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!60 &60737621979129440
+PolygonCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1062695351924868}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0}
+  m_Points:
+    m_Paths:
+    - - {x: -0.8, y: 0.64444447}
+      - {x: -0.8, y: -0.64444447}
+      - {x: 0.64444447, y: -0.64444447}
+      - {x: 0.8, y: 0.13333334}
+      - {x: 0.8, y: 0.62222224}
+      - {x: 0.75555557, y: 0.64444447}
 --- !u!212 &212271822151398002
 SpriteRenderer:
   m_ObjectHideFlags: 1

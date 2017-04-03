@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4984994008763084}
   - component: {fileID: 212313592354093164}
   - component: {fileID: 60516975726490834}
+  - component: {fileID: 251741724800647438}
   m_Layer: 8
   m_Name: plataformLeft
   m_TagString: Untagged
@@ -51,15 +52,15 @@ PolygonCollider2D:
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_UsedByEffector: 0
+  m_UsedByEffector: 1
   m_Offset: {x: 0, y: 0}
   m_Points:
     m_Paths:
     - - {x: -0.75555557, y: 0.64444447}
       - {x: -0.8, y: 0.62222224}
       - {x: -0.8, y: 0.13333334}
-      - {x: -0.64444447, y: -0.64444447}
-      - {x: 0.8, y: -0.64444447}
+      - {x: -0.64444447, y: 0.1088524}
+      - {x: 0.8, y: 0.09650326}
       - {x: 0.8, y: 0.64444447}
 --- !u!212 &212313592354093164
 SpriteRenderer:
@@ -96,3 +97,21 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+--- !u!251 &251741724800647438
+PlatformEffector2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1162378695440346}
+  m_Enabled: 1
+  m_UseColliderMask: 1
+  m_ColliderMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RotationalOffset: 0
+  m_UseOneWay: 1
+  m_UseOneWayGrouping: 1
+  m_SurfaceArc: 180
+  m_UseSideFriction: 0
+  m_UseSideBounce: 0
+  m_SideArc: 1

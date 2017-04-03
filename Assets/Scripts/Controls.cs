@@ -7,6 +7,8 @@ public class Controls : MonoBehaviour {
     public Rigidbody2D sonic;
 
     public Transform groundCheck;
+    
+
     public float groundCheckRadius;
     public LayerMask whatIsGround;
     public bool onGround;
@@ -14,25 +16,24 @@ public class Controls : MonoBehaviour {
     public float movespeed;
     public float jumpheight;
 
-    public int mvinDirection;
+    [HideInInspector] public bool facingRight = true;
+    public int mvinDirection = 1;
     public bool moveRight;
     public bool moveLeft;
     public bool jump;
-    
+
+    private Animator anim;
+
+
     public void Direction()
     {
         if (sonic.velocity == new Vector2(-movespeed, sonic.velocity.y))
         {
-            mvinDirection = -1;
-
+            mvinDirection = 0;
         }
-        else if (sonic.velocity == new Vector2(movespeed, sonic.velocity.y))
+        if (sonic.velocity == new Vector2(movespeed, sonic.velocity.y))
         {
             mvinDirection = 1;
-        }
-        else
-        {
-            mvinDirection = 0;
         }
     }
     public void kboardMove()
@@ -71,17 +72,57 @@ public class Controls : MonoBehaviour {
             jump = false;
         }
     }
+  /*  private void spriteChanger()
+    {
+        if (sonic.velocity.y > 0 && !onGround)
+        {
+            anim.SetBool("jumping", true);
+        }
+        if (sonic.velocity.y == 0 && onGround)
+        {
+            anim.SetBool("jumping", false);
+        }
+        if (sonic.velocity.y < 0 && !onGround)
+        {
+            anim.SetBool("falling",true);
+        }
+        if (sonic.velocity.x > 0 && onGround)
+        {
+            anim.SetBool("walkRight", true);
+        }
+        if (sonic.velocity.x == 0 && onGround)
+        {
+            anim.SetBool("Standing", true);
+        }
+        if (sonic.velocity.x < 0 && onGround)
+        {
+            anim.SetBool("walkLeft", true);
+        }
+    } */
+    private void spriteMirror()
+    {
+        facingRight = !facingRight;
+
+        Vector3 theScale = transform.localScale;
+        theScale.x *= -1;
+        transform.localScale = theScale;
+    }
 
     // Use this for initialization
     void Start () {
         sonic = GetComponent<Rigidbody2D>();
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    }
+
+    // Update is called once per frame
+    void Update () {
         Direction();
         kboardMove();
         touchMove();
+        // spriteChanger();
+        if (sonic.velocity.x > 0 && !facingRight)
+            spriteMirror();
+        else if (sonic.velocity.x < 0 && facingRight)
+            spriteMirror();
     }
     void FixedUpdate()
     {

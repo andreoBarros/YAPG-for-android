@@ -4,13 +4,10 @@ using UnityEngine;
 
 public class FollowCamera : MonoBehaviour{
 
-    Quaternion rotation;
-    void Awake()
-    {
-        rotation = transform.rotation;
-    }
+    public Transform goPlayer;
+    
     void LateUpdate()
     {
-        transform.rotation = rotation;
+        transform.position = new Vector3(goPlayer.position.x, goPlayer.position.y, transform.position.z);
     }
 }

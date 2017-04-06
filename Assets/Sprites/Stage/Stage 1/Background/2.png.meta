@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: e4b894a4a2a952d4b8d75c5d801cdc75
-timeCreated: 1491419625
+guid: 9630cd71447ab41428820605a0a887a9
+timeCreated: 1491422016
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName: {}
@@ -40,7 +40,7 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spritePixelsToUnits: 70
+  spritePixelsToUnits: 5
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1

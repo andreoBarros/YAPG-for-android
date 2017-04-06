@@ -13,44 +13,47 @@ public class Controls : MonoBehaviour {
     public bool pushWall;
 
     public LayerMask whatIsGround;
-    
-    public float movespeed;
+
+    [HideInInspector] private Vector2 movespeed;
     public float jumpheight;
+    
 
     [HideInInspector] public bool facingRight = true;
-    public int mvinDirection = 1;
+//    public int mvinDirection = 1;
     public bool moveRight;
     public bool moveLeft;
     public bool jump;
 
     public Animator anim;
 
-
-    public int Direction()
+    
+    public void Move()
     {
-        if (sonic.velocity.x == -movespeed)
+        if (Input.GetKey(KeyCode.LeftArrow) || moveLeft)
         {
-            return -1;
+            sonic.AddForceAtPosition(-movespeed, sonic.transform.position , ForceMode2D.Force);
+            if (onGround)
+            {
+                sonic.AddForceAtPosition(sonic.transform.position, -movespeed/2, ForceMode2D.Force);
+            }
+            while (Mathf.Sign(sonic.velocity.x) == -1 && (Input.GetKey(KeyCode.RightArrow) || moveRight))
+            {
+                sonic.AddForceAtPosition(movespeed * 2, sonic.transform.position, ForceMode2D.Force);
+            }
         }
-        else if (sonic.velocity.x == movespeed)
+        if (Input.GetKey(KeyCode.RightArrow) || moveRight)
         {
-            return 1;
-        }
-
-        return 0;
-        
-    }
-    public void kboardMove()
-    {
-        if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            sonic.velocity = new Vector2(-movespeed, sonic.velocity.y);
-        }
-        if (Input.GetKey(KeyCode.RightArrow))
-        {
-            sonic.velocity = new Vector2(movespeed, sonic.velocity.y);
-        }
-        if (Input.GetKey(KeyCode.Space) && onGround)
+            sonic.AddForceAtPosition(movespeed, sonic.transform.position, ForceMode2D.Force);
+            if (onGround)
+            {
+                sonic.AddForceAtPosition(sonic.transform.position, -movespeed/2, ForceMode2D.Force);
+            }
+            while (Mathf.Sign(sonic.velocity.x) == 1 && (Input.GetKey(KeyCode.LeftArrow) || moveLeft))
+            {
+                sonic.AddForceAtPosition(- movespeed * 2, sonic.transform.position, ForceMode2D.Force);
+            }
+        } 
+        if ((Input.GetKey(KeyCode.Space) || jump) && onGround)
         {
             sonic.velocity = new Vector2(sonic.velocity.x, jumpheight);
         }
@@ -59,24 +62,9 @@ public class Controls : MonoBehaviour {
                {
                    sonic.velocity = new Vector2(0, sonic.velocity.y);
                } */
+        
+        
     }
-    public void touchMove()
-    {
-        if (moveRight)
-        {
-            sonic.velocity = new Vector2(movespeed, sonic.velocity.y);
-        }
-        if (moveLeft)
-        {
-            sonic.velocity = new Vector2(-movespeed, sonic.velocity.y);
-        }
-        if (jump && onGround)
-        {
-            sonic.velocity = new Vector2(sonic.velocity.x, jumpheight);
-            jump = false;
-        }
-    }
-
     private void animChanger()
     {
         if (sonic.velocity.y > 0 && !onGround)
@@ -139,10 +127,28 @@ public class Controls : MonoBehaviour {
         theScale.x *= -1;
         transform.localScale = theScale;
     }
-
+    private void LimitSpeed()
+    {
+        if (sonic.velocity.x > 10)
+        {
+            sonic.velocity = new Vector2(10, sonic.velocity.y);
+        }
+        else if (sonic.velocity.x < -10)
+        {
+            sonic.velocity = new Vector2(-10, sonic.velocity.y);
+        }
+        if (sonic.velocity.y > 10)
+        {
+            sonic.velocity = new Vector2(sonic.velocity.x,10);
+        }
+        else if (sonic.velocity.x < -10)
+        {
+            sonic.velocity = new Vector2(sonic.velocity.x,10);
+        }
+    }
     private void isItpushing()
     {
-        if (Physics2D.OverlapCircle(pushingWall.position, groundnWallCheckRadius, whatIsGround) && (moveRight || moveLeft) && (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow)))
+        if (Physics2D.OverlapCircle(pushingWall.position, groundnWallCheckRadius, whatIsGround) && Mathf.Sign(sonic.velocity.x) == 1)
         {
             pushWall = true;
         }
@@ -155,16 +161,14 @@ public class Controls : MonoBehaviour {
     void Start () {
         sonic = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-
+        movespeed = new Vector2 (50, sonic.velocity.y);
     }
 
     // Update is called once per frame
     void Update() {
-
+        LimitSpeed();
         animChanger();
-        Direction();
-        kboardMove();
-        touchMove();
+        Move();
         if (sonic.velocity.x > 0 && !facingRight)
         {
             spriteMirror();
@@ -173,6 +177,8 @@ public class Controls : MonoBehaviour {
         {
             spriteMirror();
         }
+
+       
 
     }
     void FixedUpdate()

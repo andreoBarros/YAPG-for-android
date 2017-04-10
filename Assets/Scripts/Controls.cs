@@ -29,8 +29,8 @@ public class Controls : MonoBehaviour {
     public Animator anim;
 
     
-    public void Move()
-    {
+    public void Move() {
+
         if (Input.GetKey(KeyCode.LeftArrow) || moveLeft)
         {
             sonic.AddForceAtPosition(movespeed * -1, sonic.transform.position , ForceMode2D.Force);

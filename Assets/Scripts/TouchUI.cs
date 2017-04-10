@@ -38,6 +38,13 @@ public class TouchUI : MonoBehaviour {
             player.jump = true;
         }
      }
+    public void ReleaseJump()
+    {
+        if (player.onGround)
+        {
+            player.jump = false;
+        }
+    }
 
-		
+
 }

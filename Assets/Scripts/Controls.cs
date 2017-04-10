@@ -13,6 +13,8 @@ public class Controls : MonoBehaviour {
     public bool pushWall;
 
     public LayerMask whatIsGround;
+    public LayerMask whatIsBlock;
+
 
     [HideInInspector] private Vector2 movespeed;
     public float jumpheight;
@@ -31,40 +33,26 @@ public class Controls : MonoBehaviour {
     {
         if (Input.GetKey(KeyCode.LeftArrow) || moveLeft)
         {
-            sonic.AddForceAtPosition(-movespeed, sonic.transform.position , ForceMode2D.Force);
+            sonic.AddForceAtPosition(movespeed * -1, sonic.transform.position , ForceMode2D.Force);
             if (onGround)
             {
-                sonic.AddForceAtPosition(sonic.transform.position, -movespeed/2, ForceMode2D.Force);
+                sonic.AddForceAtPosition(sonic.transform.position, -movespeed * 3, ForceMode2D.Force);
             }
-            while (Mathf.Sign(sonic.velocity.x) == -1 && (Input.GetKey(KeyCode.RightArrow) || moveRight))
-            {
-                sonic.AddForceAtPosition(movespeed * 2, sonic.transform.position, ForceMode2D.Force);
-            }
+         
         }
         if (Input.GetKey(KeyCode.RightArrow) || moveRight)
         {
             sonic.AddForceAtPosition(movespeed, sonic.transform.position, ForceMode2D.Force);
             if (onGround)
             {
-                sonic.AddForceAtPosition(sonic.transform.position, -movespeed/2, ForceMode2D.Force);
-            }
-            while (Mathf.Sign(sonic.velocity.x) == 1 && (Input.GetKey(KeyCode.LeftArrow) || moveLeft))
-            {
-                sonic.AddForceAtPosition(- movespeed * 2, sonic.transform.position, ForceMode2D.Force);
+                sonic.AddForceAtPosition(sonic.transform.position, -movespeed * 3, ForceMode2D.Force);
             }
         } 
         if ((Input.GetKey(KeyCode.Space) || jump) && onGround)
         {
             sonic.velocity = new Vector2(sonic.velocity.x, jumpheight);
         }
-
-        /*       if (!Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.RightArrow) && onGround)
-               {
-                   sonic.velocity = new Vector2(0, sonic.velocity.y);
-               } */
-        
-        
-    }
+      }
     private void animChanger()
     {
         if (sonic.velocity.y > 0 && !onGround)
@@ -87,25 +75,23 @@ public class Controls : MonoBehaviour {
 
         if (sonic.velocity.x != 0 && onGround)
         {
-            do
+            if (pushWall == true)
             {
-                anim.SetBool("walk", false);
-                anim.SetBool("standing", false);
                 anim.SetBool("pushing", true);
-
-            } while (pushWall == true);
-
-            if (pushWall == false)
+            }
+            else
             {
-                anim.SetBool("walk", true);
                 anim.SetBool("pushing", false);
             }
+            anim.SetBool("walk", true);
 
         }
         else
         {
             anim.SetBool("walk", false);
-      
+            anim.SetBool("pushing", false);
+
+
         }
 
         if (sonic.velocity.x == 0 && onGround)
@@ -117,7 +103,7 @@ public class Controls : MonoBehaviour {
             anim.SetBool("standing", false);
         }
 
-       
+
     }
     private void spriteMirror()
     {
@@ -146,17 +132,7 @@ public class Controls : MonoBehaviour {
             sonic.velocity = new Vector2(sonic.velocity.x,10);
         }
     }
-    private void isItpushing()
-    {
-        if (Physics2D.OverlapCircle(pushingWall.position, groundnWallCheckRadius, whatIsGround) && Mathf.Sign(sonic.velocity.x) == 1)
-        {
-            pushWall = true;
-        }
-        else
-        {
-            pushWall = false;
-        }
-    }
+  
     // Use this for initialization
     void Start () {
         sonic = GetComponent<Rigidbody2D>();
@@ -178,12 +154,12 @@ public class Controls : MonoBehaviour {
             spriteMirror();
         }
 
-       
 
     }
     void FixedUpdate()
     {
-        onGround = Physics2D.OverlapCircle(groundCheck.position, groundnWallCheckRadius, whatIsGround); 
+        onGround = Physics2D.OverlapCircle(groundCheck.position, groundnWallCheckRadius, whatIsGround);
+        pushWall = Physics2D.OverlapCircle(pushingWall.position, groundnWallCheckRadius, whatIsBlock);
     }
 
 }

@@ -5,10 +5,15 @@ using UnityEngine;
 public class TouchUI : MonoBehaviour {
 
     private Controls player;
+    private Rigidbody2D sonic;
+    private int touchCounter = 0;
+    private int secondCounter = 0;
+    private bool seccondJumpTouch;
     // Use this for initialization
 
     void Start () {
         player = FindObjectOfType<Controls>();
+        sonic = FindObjectOfType<Rigidbody2D>();
 	}
 
 
@@ -33,16 +38,30 @@ public class TouchUI : MonoBehaviour {
 
     public void Jump()
     {
-        if (player.onGround)
-        {
             player.jump = true;
-        }
-     }
+    
+            touchCounter++;
+     
+    }
     public void ReleaseJump()
     {
-        if (player.onGround)
-        {
             player.jump = false;
+    }
+
+    private void Update()
+    {
+        if (player.onGround == true)
+        {
+            touchCounter = 0;
+        }
+        if (touchCounter == 2)
+        {
+            player.doubleJumpTouch = true;
+            touchCounter = 0;
+        }
+        else
+        {
+            player.doubleJumpTouch = false;
         }
     }
 

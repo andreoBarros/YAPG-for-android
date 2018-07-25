@@ -23,13 +23,13 @@ public class PlayerBehavior : MonoBehaviour {
         // on this line, calculate condition for freezing rotation
         if (!sonicControl.onGround)
         {
-            sonic.constraints = RigidbodyConstraints2D.FreezeRotation;
-            sonic.rotation = angle;
+          //  sonic.constraints = RigidbodyConstraints2D.FreezeRotation;
+          //  sonic.rotation = angle;
         }
         else
         {
-            sonic.constraints = RigidbodyConstraints2D.FreezeRotation;
-            sonic.rotation = angle;
+          //  sonic.constraints = RigidbodyConstraints2D.FreezeRotation;
+           // sonic.rotation = angle;
         }
     }
 }

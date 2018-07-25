@@ -170,12 +170,12 @@ public class Controls : MonoBehaviour {
         {
             SpriteMirror();
         }
+
     }
     void FixedUpdate()
     {
         onGround = Physics2D.OverlapCircle(groundCheck.position, groundnWallCheckRadius, whatIsGround);
         pushWall = Physics2D.OverlapCircle(pushingWall.position, groundnWallCheckRadius, whatIsGround);
-    
     }
 
 }

@@ -2,12 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FollowCamera : MonoBehaviour{
+public class FollowCamera : MonoBehaviour
+{
 
     public Transform goPlayer;
-    
-    void LateUpdate()
+
+
+    void Update()
     {
-        transform.position = new Vector3(goPlayer.position.x, goPlayer.position.y, transform.position.z);
+        transform.position =
+            new Vector3(Mathf.Clamp(goPlayer.position.x, -0, 500), Mathf.Clamp(goPlayer.position.y, 3, 500), transform.position.z);
     }
+
 }

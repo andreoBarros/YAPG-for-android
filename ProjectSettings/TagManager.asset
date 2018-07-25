@@ -3,7 +3,11 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - ceu1
+  - ceu2
+  - ceu3
+  - ceu4
   layers:
   - Default
   - TransparentFX
